@@ -9,8 +9,8 @@ const movieSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  duration: {
-    type: Number,
+  language: {
+    type: String,
     required: true
   },
   rating: {
@@ -21,31 +21,20 @@ const movieSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  duration: {
+    type: Number,
+    required: true
+  },
   description: {
     type: String,
     required: true
   },
-  language: {
-    type: String,
-    required: true
-  },
   showtimes: [{
-    time: String,
     theater: String,
-    price: Number,
-    totalSeats: {
-      type: Number,
-      default: 250
-    },
-    bookedSeats: {
-      type: Number,
-      default: 0
-    }
+    time: String,
+    price: Number
   }],
-  totalBookings: {
-    type: Number,
-    default: 0
-  }
+  cities: [String]
 }, {
   timestamps: true
 });

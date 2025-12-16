@@ -4,32 +4,36 @@ const cors = require('cors');
 require('dotenv').config();
 
 const app = express();
+const PORT = process.env.PORT || 8000;
 
 // Middleware
 app.use(cors());
 app.use(express.json());
 
 // MongoDB Connection
-mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log('✅ MongoDB Connected Successfully'))
-  .catch(err => console.error('❌ MongoDB Connection Error:', err));
-
-// Routes
-app.use('/api/auth', require('./routes/auth'));
-app.use('/api/movies', require('./routes/movies'));
-app.use('/api/bookings', require('./routes/bookings'));
-
-// Health check
-app.get('/api/health', (req, res) => {
-  res.json({ 
-    message: 'EASY BOOK API is running!', 
-    timestamp: new Date().toISOString(),
-    database: mongoose.connection.readyState === 1 ? 'Connected' : 'Disconnected'
-  });
+mongoose.connect(process.env.MONGODB_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+.then(() => {
+  console.log('✅ MongoDB Atlas Connected Successfully');
+  console.log('📊 Database: easybook');
+})
+.catch(err => {
+  console.log('❌ MongoDB Connection Error:', err.message);
+  console.log('🔧 Check your connection string and network access');
 });
 
-const PORT = process.env.PORT || 5000;
+// Routes
+app.use('/api/movies', require('./routes/movies'));
+app.use('/api/bookings', require('./routes/bookings'));
+app.use('/api/auth', require('./routes/auth'));
+
+// Test route
+app.get('/', (req, res) => {
+  res.json({ message: 'EasyBook API Server Running!' });
+});
+
 app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
-  console.log(`📱 API Health: http://localhost:${PORT}/api/health`);
+  console.log(`🚀 Server running on http://localhost:${PORT}`);
 });
