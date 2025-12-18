@@ -10,7 +10,7 @@ const Booking = () => {
   
   const [movie, setMovie] = useState(null);
   const [formData, setFormData] = useState({
-    email: '',
+    email: localStorage.getItem('userEmail') || '',
     seats: 1,
     showtime: searchParams.get('showtime') || '',
     theater: searchParams.get('theater') || '',
@@ -160,8 +160,18 @@ const Booking = () => {
                 value={formData.email}
                 onChange={(e) => setFormData({...formData, email: e.target.value})}
                 placeholder="Enter your email"
+                readOnly={!!localStorage.getItem('isLoggedIn')}
+                style={{
+                  backgroundColor: localStorage.getItem('isLoggedIn') ? '#f8f9fa' : 'white',
+                  cursor: localStorage.getItem('isLoggedIn') ? 'not-allowed' : 'text'
+                }}
                 required
               />
+              {localStorage.getItem('isLoggedIn') && (
+                <p style={{ fontSize: '12px', color: '#666', marginTop: '5px' }}>
+                  Booking as: {localStorage.getItem('userName')}
+                </p>
+              )}
             </div>
             
             <div className="form-group">

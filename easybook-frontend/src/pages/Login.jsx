@@ -11,7 +11,30 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert(isLogin ? 'Login successful!' : 'Account created successfully!');
+    
+    if (isLogin) {
+      // Simple login validation
+      if (formData.email && formData.password) {
+        localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('userEmail', formData.email);
+        localStorage.setItem('userName', formData.email.split('@')[0]);
+        alert('🎉 Login successful!');
+        window.location.href = '/';
+      } else {
+        alert('Please enter email and password');
+      }
+    } else {
+      // Simple registration
+      if (formData.name && formData.email && formData.password) {
+        localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('userEmail', formData.email);
+        localStorage.setItem('userName', formData.name);
+        alert('🎉 Account created successfully!');
+        window.location.href = '/';
+      } else {
+        alert('Please fill all fields');
+      }
+    }
   };
 
   return (

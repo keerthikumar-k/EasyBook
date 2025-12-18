@@ -11,6 +11,7 @@ import Login from './pages/Login';
 import Stream from './pages/Stream';
 import Events from './pages/Events';
 import Plays from './pages/Plays';
+import SearchResults from './pages/SearchResults';
 import './App.css';
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
           <Route path="/stream" element={<Stream />} />
           <Route path="/events" element={<Events />} />
           <Route path="/plays" element={<Plays />} />
+          <Route path="/search" element={<SearchResults />} />
         </Routes>
       </div>
     </Router>
